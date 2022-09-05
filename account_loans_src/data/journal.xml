@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+         <record  model="account.journal" id="aj_002">
+            <field name="name">Deferred expense interest</field>
+             <field name="code">DEI</field>
+             <field name="type">general</field>
+             <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>
