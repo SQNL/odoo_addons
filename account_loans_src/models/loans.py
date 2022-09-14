@@ -4,7 +4,6 @@ from odoo import models, fields, api, _
 from datetime import datetime, date
 from odoo.exceptions import UserError
 from functools import reduce
-from ...sqn_pms.models.account_loans import LoanStructureWS
 
 
 # Todo: Decorador para generar un asiento contable
@@ -32,6 +31,24 @@ def generatemove(function):
         return move
 
     return wrap
+
+
+# todo: Estructura de datos para intercambiar
+class LoanStructureWS:
+    n_quota = 0  # numero de cuotas
+    total_amount = 0.0  # monto total a diferir
+    date_start = False  # fecha de inicio del 1er gasto
+    currency = ""  # moneda MNX ó USD ó EUR
+    quotas = []  # gastos diferidos, lista de diccionario con la estructura {'date': '30/12/2022', 'amount': 20}
+
+    def __init__(self, n_quota=0, total_amount=0.0, date_start=datetime.date.today(), currency="USD", quotas=False):
+        if not quotas:
+            quotas = []
+        self.n_quota = n_quota
+        self.total_amount = total_amount
+        self.date_start = date_start
+        self.currency = currency
+        self.quotas = quotas
 
 
 class AccountLoans(models.Model):
