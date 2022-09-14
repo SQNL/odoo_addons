@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from odoo import models, fields, api, _
 from datetime import datetime, date
 from odoo.exceptions import UserError
@@ -41,7 +40,7 @@ class LoanStructureWS:
     currency = ""  # moneda MNX ó USD ó EUR
     quotas = []  # gastos diferidos, lista de diccionario con la estructura {'date': '30/12/2022', 'amount': 20}
 
-    def __init__(self, n_quota=0, total_amount=0.0, date_start=datetime.date.today(), currency="USD", quotas=False):
+    def __init__(self, n_quota=0, total_amount=0.0, date_start=date.today(), currency="USD", quotas=False):
         if not quotas:
             quotas = []
         self.n_quota = n_quota
