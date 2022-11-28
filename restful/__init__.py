@@ -28,6 +28,13 @@ def get_path_reverse(path):
     return FUNCTION.get(path, False)
 
 
+def is_request_restful(httprequest):
+    path = httprequest.path
+    path = path.split("/")
+    version = path[1]
+    return bool('api' in version)
+
+
 def request_restful(httprequest, **kwargs):
     """Proxy request to the actual destination."""
     c = controllers.main.APIController()
@@ -36,7 +43,6 @@ def request_restful(httprequest, **kwargs):
     _id = int(_id[0]) if _id else False
     path = path.split("/")
     model = path[2]
-
     method = get_path_reverse(httprequest.full_path)
 
     if not method:
@@ -51,7 +57,7 @@ def _handle_exception(self, exception):
     """Called within an except block to allow converting exceptions
            to arbitrary responses. Anything returned (except None) will
            be used as response."""
-    if self.httprequest.headers.get("access-token", False):
+    if is_request_restful(self.httprequest) and self.httprequest.headers.get("access-token", False):
         return request_restful(
             self.httprequest, **json.loads(self.httprequest.get_data().decode(self.httprequest.charset))
         )
